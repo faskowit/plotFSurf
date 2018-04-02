@@ -1,12 +1,14 @@
-function [ outStruct ] = plotFSurf_setup(subjects_dir,subject,...
-                            lh_roi_txt,rh_roi_txt,...
-                            lh_surface_asc,rh_surface_asc,...
-                            medial_wall_bool)
+function [ dataStruct ] = plotFSurf_setup(subjects_dir,subject,...
+                                          lh_roi_txt,...
+                                          rh_roi_txt,...
+                                          lh_surface_asc,...
+                                          rh_surface_asc,...
+                                          medial_wall_bool)
 % setup for plotting. use this function to obtain verticies and faces of
-% the surface, and to parcellate the surface based on the roi lists
+% the surface, and visualize rois on the surface based on the roi lists
 % provided via the text files
 %
-% INPUTS+
+% INPUTS
 %
 % subjects_dir: SUBJECTS_DIR in FreeSurfer
 % subject:          subject in SUBJECTS_DIR (usually your fsaverage subject)
@@ -33,6 +35,12 @@ function [ outStruct ] = plotFSurf_setup(subjects_dir,subject,...
 % Indiana University
 % Computational Cognitive Neurosciene Lab
 % See LICENSE file for license
+%
+% Note: We retain the kind of clunky method for reading in ROIs for two
+% reasons: 1) reading in the annot file we cannot be sure which hemisphere
+% an ROI belongs to and 2) this method can flexibly accomodate people who
+% want to plot only select labels--not the whole parcellation
+%
 
 % deal with optional medial wall 
 if ~exist('medial_wall_bool','var') || isempty(medial_wall_bool)
@@ -64,6 +72,13 @@ for kk = 1:2
   end
 end
 
+% check_file = strcat(subjects_dir,'/',subject,'/label/lh.',roinames{1}{1},'.label') ;
+% if exist(check_file,'file') == 0
+%    disp('need to run FreeSurfer function "mri_annotation2label" on annot')
+%    disp('before running this program')
+%    exit 1
+% end
+
 % Read label files
 hemi = {'lh','rh'};
 label_roi = cell(max(Nrois),2);
@@ -79,12 +94,13 @@ end
 [F_RH, V_RH] = plotFSurf_load_surf(rh_surface_asc);
 
 %% output
-% package a struct
-outStruct = struct() ;
-outStruct.F_LH = F_LH ;
-outStruct.V_LH = V_LH ;
-outStruct.F_RH = F_RH ;
-outStruct.V_RH = V_RH ;
-outStruct.label_roi = label_roi ;
-outStruct.roi_names = roinames' ;
+
+% package a struct to be used in other functions
+dataStruct = struct() ;
+dataStruct.F_LH = F_LH ;
+dataStruct.V_LH = V_LH ;
+dataStruct.F_RH = F_RH ;
+dataStruct.V_RH = V_RH ;
+dataStruct.label_roi = label_roi ;
+dataStruct.roi_names = roinames' ;
 
