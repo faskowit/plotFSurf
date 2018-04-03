@@ -8,7 +8,10 @@ function [] = plotFSurf_viz_trisurf(dataStruct,...
 % INPUTS:
 % dataStruct:                   struct returned by plotFSurf_setup func
 % weights_{LH,RH}:              vector of weights for each roi, length = 
-%                               number points in each surface
+%                               number points in each hemisphere surface.
+%                               The previous functions should have taken
+%                               care to make these vectors for you so you
+%                               dont have to worrry about it! 
 % cmap:                         colormap to be used in colormap() func
 % CDataMapStr:                  option for mapping colors. either scaled or
 %                               direct.
