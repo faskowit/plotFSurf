@@ -32,6 +32,12 @@ if ~exist('unknown_color','var') || isempty(unknown_color)
     unknown_color = [ 0.5 0.5 0.5 ]; 
 end
 
+% check weights unknown variable
+if ~exist('weights_range','var') || isempty(weights_range)
+    weights_range = ''; % weight for unknown vertices
+end
+
+% check weights unknown variable
 if ~exist('cmap','var') || isempty(cmap)
     cmap = brewermap(250,'PuRd'); 
 end

@@ -2,6 +2,7 @@ function [ plotStruct ] = plotFSurf_setup_parcel_weights(dataStruct,...
                                                 lh_weights,...
                                                 rh_weights,...
                                                 weights_unknown,...
+                                                unknown_color,...
                                                 weights_range,...
                                                 cmap)
 % Plot weights on parcellated cortical surfaces
@@ -28,14 +29,18 @@ function [ plotStruct ] = plotFSurf_setup_parcel_weights(dataStruct,...
 
 % check weights unknown variable
 if ~exist('weights_unknown','var') || isempty(weights_unknown)
-    weights_unknown = -1; % weight for unknown vertices
+    weights_unknown = -999; % weight for unknown vertices
+end
+
+% check weights unknown variable
+if ~exist('unknown_color','var') || isempty(unknown_color)
+    unknown_color = [ 0.5 0.5 0.5 ]; 
 end
 
 % check weights unknown variable
 if ~exist('weights_range','var') || isempty(weights_range)
     weights_range = ''; % weight for unknown vertices
 end
-
 
 % check weights unknown variable
 if ~exist('cmap','var') || isempty(cmap)
