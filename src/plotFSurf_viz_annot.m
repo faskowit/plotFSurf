@@ -56,4 +56,3 @@ fig = figure;
 CDataMap = 'direct' ;
 cmap = annot_colors ;
 plotFSurf_viz_trisurf(dataStruct,weights_LH,weights_RH,cmap,CDataMap) 
-% plotFSurf_viz_trisurf(dataStruct,weights_LH,weights_RH,cmap,CDataMap,'lh_lat') 

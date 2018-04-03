@@ -103,7 +103,7 @@ end
 
 %% convert from weight to colormap index
 
-[dir_cmap_ind_LH,dir_cmap_ind_RH,o_cmap] = plotSurf_weight_2_cmapInd(...
+[dir_cmap_ind_LH,dir_cmap_ind_RH,o_cmap] = plotFSurf_weight_2_cmapInd(...
     weights_LH,weights_RH,weights_unknown,unknown_color,weights_range,cmap) ;
 
 %% setup output struct

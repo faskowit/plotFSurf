@@ -37,6 +37,7 @@ then
         { oDir=${PWD}/plotFSurf_prep/ ; echo "couldnt write in $SDIR. writing to PWD" ; mkdir -p ${PWD}/plotFSurf_prep/ ; }
 else
     oDir=$3
+    mkdir -p $3
 fi
 
 if [[ -z $4 ]]
@@ -51,9 +52,9 @@ for h in ${HEMI} ; do
 
     # For each surface file
     for s in ${SURF} ; do
-        if [[ -e ${sDir}/surf/${h}.${s} ]] ; then
-            echo "${sDir}/surf/${h}.${s} -> ${oDir}/${h}.${s}.srf"
-            ${FREESURFER_HOME}/bin/mris_convert ${sDir}/surf/${h}.${s} ${oDir}/${h}.${s}.asc
+        if [[ -e ${SDIR}/surf/${h}.${s} ]] ; then
+            echo "${SDIR}/surf/${h}.${s} -> ${oDir}/${h}.${s}.srf"
+            ${FREESURFER_HOME}/bin/mris_convert ${SDIR}/surf/${h}.${s} ${oDir}/${h}.${s}.asc
             # rename to make more understandable
             mv ${oDir}/${h}.${s}.asc ${oDir}/${h}.${s}.srf
         fi
@@ -61,13 +62,21 @@ for h in ${HEMI} ; do
 
     for a in ${ATLAS} ; do
         
-        if [[ -e ${sDir}/label/${h}.${a}.annot ]] ; then
-            mri_annotation2label --subject ${SUBJ} --hemi ${h} --annotation ${a} --outdir ${oDir} > ${oDir}/tmp_note.txt
+        if [[ -e ${SDIR}/label/${h}.${a}.annot ]] ; then
+            ${FREESURFER_HOME}/bin/mri_annotation2label \
+                --subject ${SUBJ} --hemi ${h} --annotation ${a} \
+                --outdir ${oDir} > ${oDir}/tmp_note.txt
             # create list of labels
             cat ${oDir}/tmp_note.txt | grep "${oDir}.*label" | sed s,.*${oDir}.*${h}.,, | sed s,.label,, > ${oDir}/${h}.label_list.txt
             rm ${oDir}/tmp_note.txt
+
+            # also link all the lables to the label dir
+            for ll in $(cat ${oDir}/${h}.label_list.txt); do
+                ls $(readlink -f ${oDir}/${h}.${ll}.label) && ln -s $(readlink -f ${oDir}/${h}.${ll}.label) ${SDIR}/label/${h}.${ll}.label
+            done
+
         else
-            echo "could not read atlas: ${sDir}/label/${h}.${a}.annot Please check"
+            echo "could not read atlas: ${SDIR}/label/${h}.${a}.annot Please check"
         fi
     done
 done
