@@ -8,3 +8,7 @@ Take a look at the ``plotSurf_example.m`` for a quick plotting recipe using the 
 These scripts were adapted from code provided by [Makoto Fukushima](https://sites.google.com/site/mfukushimaweb/home). 
 
 ![jpg image that doesnt look the hottest](./example_data/example_img.jpg)
+
+![annot image too](./example_data/example_img2.jpg)
+
+<sub> This material is based upon work supported by the National Science Foundation Graduate Research Fellowship under Grant No. 1342962. Any opinion, findings, and conclusions or recommendations expressed in this material are those of the authors(s) and do not necessarily reflect the views of the National Science Foundation. </sub>
