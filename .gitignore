@@ -42,7 +42,7 @@ Thumbs.db
 *.mat
 *.gz
 *~
-*.png
 *.label
 *.srf
 *.txt
+*.png
