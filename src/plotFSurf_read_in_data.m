@@ -12,6 +12,9 @@ function [ dataStruct ] = plotFSurf_read_in_data(lh_surface_asc,...
 %
 % lh_surface_asc:   asc file of cortical surface (example= lh.white.asc)
 % rh_surface_asc:   asc file of cortical surface (example= lh.white.asc)
+% 
+% note: you minimally need these ascii surfaces to do viz; if you would
+% like to viz data in a parcellation, you should provide the opt inputs
 %
 % OPTIONAL INPUTS:
 %
@@ -24,7 +27,7 @@ function [ dataStruct ] = plotFSurf_read_in_data(lh_surface_asc,...
 % medial_wall_bool: Add the medial wall label (this will increase your list
 %                   of roi labels by one)
 %
-% OUTPUTS:
+% OUTPUT:
 % 
 % MATLAB structure with the following fields:
 %

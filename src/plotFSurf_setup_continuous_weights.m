@@ -1,18 +1,41 @@
 function [ plotStruct ] = plotFSurf_setup_continuous_weights(dataStruct,...
                                                 lh_weights,...
                                                 rh_weights,...
+                                                cmap,...
                                                 weights_unknown,...
                                                 unknown_color,...
-                                                weights_range,...
-                                                cmap)
-% Plot weights on parcellated cortical surfaces
+                                                weights_range)
+% Plot continuous weights on cortical surfaces (no ROIs)
 %
-% INPUTS
+% INPUTS:
 %
 % dataStruct:                   struct returned by plotFSurf_setup func
 % {lh,rh}_weights:              vector of weights for each surface; should
 %                               be size: (num of verticies in hemi surf)x1
-% weights_unknown:              value for surface vertices not given value
+% cmap:                         the colormap that the data will correspond
+%                               to. defualt: brewermap(250,'PuRd')
+% weights_unknown (opt):        value for surface vertices not given value;
+%                               make sure this value outside the expected
+%                               range for your values. default: -999 
+% unknown_color (opt):          color that will be added to cmap if unknown
+%                               values are encountered. default: [.5 .5 .5]
+% weights_range:                can give a range to visualize; higher and 
+%                               lower values will be trimed to the min and
+%                               max provided here. format [ min max ].
+%                               default: [ min(data) max(data) ]
+%
+% OUPUT:
+% 
+% a MATLAB structure with the following fields:
+% 
+% {LH,RH}_weights:              output values that index the cmap provided
+% CDataMapStr:                  how the CDataMap should function; based on
+%                               this function, it will be set to 'direct'
+% cmap:                         the cmap that should be used for viz; if
+%                               there were unknown values in the final
+%                               mapped data, there will be an additional
+%                               row (compared to input cmap) corresponding
+%                               to the unknown_color
 %
 % 09/22/2017 M.Fukushima
 % 03/30/2018 J.Faskowitz
@@ -67,8 +90,8 @@ plotStruct = struct();
 
 % the data has been setup to visualized directly
 plotStruct.CDataMapStr = 'direct' ;
-plotStruct.LH_weights = dir_cmap_ind_LH ;
-plotStruct.RH_weights = dir_cmap_ind_RH ;
+plotStruct.LH_vals = dir_cmap_ind_LH ;
+plotStruct.RH_vals = dir_cmap_ind_RH ;
 plotStruct.cmap = o_cmap ;
 
 % use the func 'plotFSurf_viz_trisurf' to visualize

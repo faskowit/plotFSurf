@@ -2,6 +2,8 @@ function [dir_cmap_ind_LH , dir_cmap_ind_RH , cmap] = ...
     plotFSurf_weight_2_cmapInd(weights_LH,weights_RH,weights_unknown,unknown_color,weights_range,cmap)
 % internal function for plotSurf
 %
+% clunky logic handling unknown values; TODO is to clean this up
+%
 % J.Faskowitz
 % Indiana University
 % Computational Cognitive Neurosciene Lab
@@ -48,9 +50,12 @@ trim_weights(unkwn_ind) = weights_unknown ;
 dir_cmap_ind_LH = discretize(trim_weights(lh_ind),hist_edges) ;
 dir_cmap_ind_RH = discretize(trim_weights(rh_ind),hist_edges);
 
-% if there are unknown values... set them to a new color! outside of the
-% cmap we already have
+% this sum will be greater than zero if there are values outside the edges
+% given to the discretize func. by design (see conditional above) unknown 
+% valus will be outside of this range
 if sum(unkwn_ind) > 0
+    % if there are unknown values... set them to a new color! outside of 
+    % the cmap we already have
     dir_cmap_ind_LH(isnan(dir_cmap_ind_LH)) = length(cmap)+1 ;
     dir_cmap_ind_RH(isnan(dir_cmap_ind_RH)) = length(cmap)+1 ;
     cmap = [ cmap ; unknown_color ] ;
