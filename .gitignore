@@ -39,7 +39,10 @@ ehthumbs.db
 Thumbs.db
 
 # josh added
-*mat
-*gz
+*.mat
+*.gz
 *~
-*png
+*.png
+*.label
+*.srf
+*.txt
