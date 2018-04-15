@@ -132,6 +132,12 @@ dataStruct.F_LH = F_LH ;
 dataStruct.V_LH = V_LH ;
 dataStruct.F_RH = F_RH ;
 dataStruct.V_RH = V_RH ;
-dataStruct.label_roi = label_roi ;
-dataStruct.roi_names = roinames' ;
 
+if (~isempty(lh_roi_txt)) || (~isempty(rh_roi_txt))
+
+    dataStruct.label_roi = label_roi ;
+    dataStruct.roi_names = roinames' ;
+else
+    dataStruct.label_roi = '' ;
+    dataStruct.roi_names = '' ;
+end
